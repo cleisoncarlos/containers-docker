@@ -5,17 +5,16 @@ services:
     image: jellyfin/jellyfin:latest
     container_name: jellyfin
     ports:
-      - "8096:8096"
+      - "8096:8096"  # Porta para acesso ao Jellyfin
     volumes:
-      - jellyfin_config:/app/config  # Corrigido de /config para /app/config
-     # - jellyfin_media:/media
-      - "C:/Users/Mentor/Music/media:/media"
+      - ./jellyfin_config:/app/config  # Salvar configurações na pasta local
+      - "E:/CLEISON COISAS:/media"  # Mapeamento local para mídia
     environment:
-      - PUID=1000  # Adicionado para definir o usuário
-      - PGID=1000  # Adicionado para definir o grupo
-      - TZ=America/Sao_Paulo
+      - PUID=1000  # ID do usuário para permissões
+      - PGID=1000  # ID do grupo para permissões
+      - TZ=America/Sao_Paulo  # Fuso horário
     restart: unless-stopped
-    user: "1000:1000"  # Adicionado para garantir permissões corretas
+    user: "1000:1000"  # Garante permissões corretas
 
   jellyseerr:
     image: fallenbagel/jellyseerr:latest
@@ -23,21 +22,20 @@ services:
     depends_on:
       - jellyfin
     ports:
-      - "5055:5055"
+      - "5055:5055"  # Porta para acesso ao Jellyseerr
     volumes:
-      - jellyseerr_data:/app/config
+      - ./jellyseerr_data:/app/config  # Salvar configurações na pasta local
     environment:
-      - TZ=America/Sao_Paulo
-      - JELLYFIN_URL=http://jellyfin:8096
-      - JELLYFIN_PORT=8096
-      - BASE_URL=/jellyseerr  # Corrigido de URL_BASE para BASE_URL
-      - ADMIN_EMAIL=admin@email.com
-      - ADMIN_USERNAME=admin
-      - ADMIN_PASSWORD=123456
+      - TZ=America/Sao_Paulo  # Fuso horário
+     # - JELLYFIN_URL=http://jellyfin:8096  # URL do Jellyfin
+      - JELLYFIN_URL=http://192.168.68.114:8096  # URL do Jellyfin
+      - JELLYFIN_PORT=8096  # Porta do Jellyfin
+      # - BASE_URL=/jellyseerr  # URL base do Jellyseerr
+      - ADMIN_EMAIL=admin@email.com  # E-mail do administrador
+      - ADMIN_USERNAME=admin  # Nome de usuário do administrador
+      - ADMIN_PASSWORD=123456  # Senha do administrador
     restart: unless-stopped
-    user: "1000:1000"  # Adicionado para garantir permissões corretas
+    user: "1000:1000"  # Garante permissões corretas
 
 volumes:
-  jellyfin_config:
-  jellyfin_media:
-  jellyseerr_data:
+  jellyfin_media:   # Volume para mídia (opcional, se usado no serviço Jellyfin)
