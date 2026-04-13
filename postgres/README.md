@@ -17,6 +17,11 @@
    docker compose logs postgres
    ```
 
+## Connection String
+```
+postgresql://postgres:postgres@localhost:5432/database
+```
+
 ## Acessar com Beekeeper Studio
 
 - **Host:** localhost
@@ -24,6 +29,7 @@
 - **Database:** database
 - **Username:** postgres
 - **Password:** postgres
+
 
 ## Volume de dados
 
