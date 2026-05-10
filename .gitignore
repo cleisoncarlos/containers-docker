@@ -1,4 +1,6 @@
 
-postgres\data
-mongoDB\data
-uptime-akuma\data
+postgres/data
+uptime-akuma/data
+
+mongoDB/data
+
